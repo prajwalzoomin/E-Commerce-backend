@@ -45,10 +45,15 @@ public class CartServiceImpl implements CartService {
         cartItemRepository.save(cartItem);
     }
 
-    @Override
-    public void removeFromCart(Integer userId, Integer productId) {
-        cartItemRepository.deleteByUserIdAndProductId(userId, productId);
-    }
+//    @Override
+//    public void removeFromCart(Integer userId, Integer productId) {
+//        List<CartItem> items = cartItemRepository.findByUserId(userId);
+//        boolean exists = items.stream().anyMatch(item -> item.getProduct().getId().equals(productId));
+//        if (!exists) {
+//            throw new RuntimeException("Cart item not found for userId: " + userId + " and productId: " + productId);
+//        }
+//        cartItemRepository.deleteByUserIdAndProductId(userId, productId);
+//    }
 
     @Override
     public List<CartItem> getCartItems(Integer userId) {

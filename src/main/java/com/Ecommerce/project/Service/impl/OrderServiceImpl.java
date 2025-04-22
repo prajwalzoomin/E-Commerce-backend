@@ -1,7 +1,5 @@
 package com.Ecommerce.project.Service.impl;
 
-
-
 import com.Ecommerce.project.Entities.CartItem;
 import com.Ecommerce.project.Entities.Orders;
 import com.Ecommerce.project.Entities.OrderItem;
@@ -40,6 +38,12 @@ public class OrderServiceImpl implements OrderService {
         order.setUser(userRepository.findById(user_Id)
                 .orElseThrow(() -> new RuntimeException("User not found")));
         order.setOrderDate(new java.util.Date());
+
+
+        // Calculate the total amount
+        double totalAmount = 0.0;
+
+        // Save the order first
         orderRepository.save(order);
 
         for (CartItem cartItem : cartItems) {
@@ -47,10 +51,20 @@ public class OrderServiceImpl implements OrderService {
             orderItem.setOrder(order);
             orderItem.setProduct(cartItem.getProduct());
             orderItem.setQuantity(cartItem.getQuantity());
+
+            // Set the price from the cart item or product
+            Double itemPrice = cartItem.getProduct().getPrice();
+            orderItem.setPrice(itemPrice);
+
+            // Add to total amount
+            totalAmount += (itemPrice * cartItem.getQuantity());
+
             orderItemRepository.save(orderItem);
         }
 
+
         cartItemRepository.deleteAll(cartItems);
+//        System.out.println("Your order confirmed! Check your mail for more details");
     }
 
     @Override

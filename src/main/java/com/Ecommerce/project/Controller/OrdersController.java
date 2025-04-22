@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+import static java.lang.System.*;
+
 @RestController
 @RequestMapping("/api/orders")
 public class OrdersController {
@@ -14,8 +16,9 @@ public class OrdersController {
     private OrderService orderService;
 
     @PostMapping("/")
-    public void placeOrder(@RequestBody OrderRequest request) {
+    public String placeOrder(@RequestBody OrderRequest request) {
         orderService.placeOrder(request.getUser_Id());
+        return ("Your order confirmed! Check your mail for more details");
     }
 
 

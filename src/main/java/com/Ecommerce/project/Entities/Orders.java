@@ -2,6 +2,7 @@ package com.Ecommerce.project.Entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.Date;
 import java.util.List;
@@ -16,17 +17,16 @@ public class Orders {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnoreProperties({"orderItems", "password"})
     private User user;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("order")
     private List<OrderItem> orderItems;
-
 
     private Date orderDate;
 
     // Getters and Setters
-
-
     public Integer getId() {
         return Id;
     }
@@ -50,7 +50,6 @@ public class Orders {
     public void setOrderItems(List<OrderItem> orderItems) {
         this.orderItems = orderItems;
     }
-
 
     public Date getOrderDate() {
         return orderDate;

@@ -19,15 +19,6 @@ public class CartController {
         cartService.addToCart(request.getUser_Id(), request.getProductId(), request.getQuantity());
     }
 
-    @PutMapping("/update")
-    public void updateCart(@RequestBody CartItemRequest request) {
-        cartService.updateCart(request.getUser_Id(), request.getProductId(), request.getQuantity());
-    }
-
-    @DeleteMapping("/remove")
-    public void removeFromCart(@RequestBody Integer user_Id, @RequestBody Integer productId) {
-        cartService.removeFromCart(user_Id, productId);
-    }
 
     @GetMapping("/{Id}")
     public List<CartItem> getCartItems(@PathVariable Integer Id) {
